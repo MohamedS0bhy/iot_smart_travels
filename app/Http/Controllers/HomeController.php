@@ -30,25 +30,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $flights=Flight::paginate(5);
-
-         $cities=City::all();
-
-          $airlines=Airline::all();
-          $cityShower=cities_airports();
-          $airlinesShower=airlines();
-        return view('welcome',['flights'=>$flights,'cities'=>$cities,'airlines'=>$airlines,'cityShower'=>$cityShower,'airlinesShower'=>$airlinesShower]);
+      $flights=Flight::paginate(5);
+      $cities=City::all();
+      $airlines=Airline::all();
+      $cityShower=cities_airports();
+      $airlinesShower=airlines();
+      return view('welcome',['flights'=>$flights,'cities'=>$cities,'airlines'=>$airlines,'cityShower'=>$cityShower,'airlinesShower'=>$airlinesShower]);
     }
-public function contact()
-{
-
-return view('website.contact.contact');
-
-}
+    public function contact()
+    {
+      return view('website.contact.contact');
+    }
 public function store()
 {
-
 }
 
 

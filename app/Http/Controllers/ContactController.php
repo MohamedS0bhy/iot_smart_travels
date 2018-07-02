@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use App\ContactUs;
 use Illuminate\Http\Request;
-// use App\Http\Requests\ContactRequest;
+use App\Http\Requests\ContactRequest;
 class ContactController extends Controller
 {
 
@@ -13,12 +13,12 @@ public function store(Request $request)
 {
 
   $this->validate($request,
-[
-  'contact_name'=>'required|min:5|max:100',
-  'contact_email'=>'required|min:5|max:100',
-  'contact_message'=>'required|min:5',
-  'contact_type'=>'required|integer'
-]
+  [
+    'contact_name'=>'required|min:5|max:100',
+    'contact_email'=>'required|min:5|max:100',
+    'contact_message'=>'required|min:5',
+    'contact_type'=>'required|integer'
+  ]
 );
 $contactUs=ContactUs::create(
   [

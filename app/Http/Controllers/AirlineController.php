@@ -18,21 +18,11 @@ class AirlineController extends Controller
      */
     public function index()
     {
-
       if(Auth::user()->admin==1){
       $airlinesShower=airlines();
-
-
-
-          $Aairlines=AirLine::where('airline_status',1)->get();
-
-          $countries=Country::all();
-
-
-
-
-
-          return view('admin.airlines.airlines',['Aairlines'=>$Aairlines,'airlinesShower'=>  $airlinesShower,'countries'=>$countries]);
+      $Aairlines=AirLine::where('airline_status',1)->get();
+      $countries=Country::all();
+      return view('admin.airlines.airlines',['Aairlines'=>$Aairlines,'airlinesShower'=>  $airlinesShower,'countries'=>$countries]);
 
       }
      return view('auth.login');
@@ -58,28 +48,17 @@ class AirlineController extends Controller
      */
     public function store(Request $request)
     {
-
- $add= $request->input('airline_add');
-
-
-           $airlineAdd=Airline::find($add);
-
-       $airlineAdd->fill(['airline_status'=>1])->save();
-
+      $add= $request->input('airline_add');
+      $airlineAdd=Airline::find($add);
+      $airlineAdd->fill(['airline_status'=>1])->save();
       return redirect()->back()->with('success', 'you hav  just added an airline ');
-
-
     }
 public function activate($id)
 {
-
-             $airlineAdd=Airline::find($id);
-
-         $airlineAdd->fill(['airline_status'=>1])->save();
-
-        return redirect()->back()->with('success', 'you hav  just added an airline ');
-
-}
+      $airlineAdd=Airline::find($id);
+      $airlineAdd->fill(['airline_status'=>1])->save();
+      return redirect()->back()->with('success', 'you hav  just added an airline ');
+  }
 
 
 
@@ -93,7 +72,8 @@ public function activate($id)
     {
       $singleAirline=$airline->find($id);
       $airlinesShower=airlines();
-$country=$country->all();
+      $country=$country->all();
+// testing issues
 // for ($i=1; $i <195 ; $i++) {
 // if(showCountries($i)==$airlinesShower[$singleAirline->id]['Country'])
 // {
@@ -110,10 +90,7 @@ $country=$country->all();
 //
 // }
 // dd();
-
-
-
-return view('admin.airlines.show',['singleAirline'=>$singleAirline,'airlinesShower'=>$airlinesShower]);
+   return view('admin.airlines.show',['singleAirline'=>$singleAirline,'airlinesShower'=>$airlinesShower]);
     }
 
     /**
@@ -150,36 +127,12 @@ return view('admin.airlines.show',['singleAirline'=>$singleAirline,'airlinesShow
 
       if(Auth::user()->admin==1){
       $airlinesShower=airlines();
-
-
-
-          $Aairlines=AirLine::where('airline_status',1)->get();
-          $countries=Country::all();
-
-
-
-                  $airlinedrop=$airline->find($id);
-
-                    $airlinedrop->fill(['airline_status'=>0])->save();
-
-
-
-
-
-
-
-          return redirect()->back()->with('success', 'You have Dropped (de-activated)  Airline');
-
+      $Aairlines=AirLine::where('airline_status',1)->get();
+      $countries=Country::all();
+      $airlinedrop=$airline->find($id);
+      $airlinedrop->fill(['airline_status'=>0])->save();
+      return redirect()->back()->with('success', 'You have Dropped (de-activated)  Airline');
       }
      return view('auth.login');
-
-
-
-
-
-
-
-
-
     }
 }

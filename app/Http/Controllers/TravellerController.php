@@ -25,45 +25,32 @@ class TravellerController extends Controller
     public function showTravellers(Traveler $traveller)
     {
          $travellers= $traveller->all();
-
          $cityShower=cities_airports();
-
       return view('admin.travellers.travellers',['travellers'=>$travellers,'cityShower'=>$cityShower]);
-
     }
-public function showSingleTraveller($id)
-{
+    public function showSingleTraveller($id)
+     {
+       $traveller=Traveler::find($id);
+       $cityShower=cities_airports();
+       $flights=Flight::where('from_city',$traveller->from_city)->where('to_city',$traveller->to_city)->get();
+       return view('admin.travellers.singleTraveller',['traveller'=>$traveller,'cityShower'=>$cityShower,'flights'=>$flights]);
+    }
 
- $traveller=Traveler::find($id);
-
- $cityShower=cities_airports();
- $flights=Flight::where('from_city',$traveller->from_city)->where('to_city',$traveller->to_city)->get();
-
- return view('admin.travellers.singleTraveller',['traveller'=>$traveller,'cityShower'=>$cityShower,'flights'=>$flights]);
-}
-
-public function addTravellerToflight(Request $request, $id)
-{
-
-$traveller=Traveler::find($id);
-$flight=Flight::find($request->flight);
-
-$ticket=Ticket::create(
-  [
-    'flight'=>$request->flight,
-    'ticket_status'=>1,
-    'qr'=>rand(1445645656,844564565),
-    'traveller'=>$id,
-    'gate'=>rand(0,1),
-    'user_id'=>$traveller->user_id
-  ]);
-
-
-
-
-
-return redirect('/adminpanel/travellers')->with('success','traveller had been added successfully');
-}
+      public function addTravellerToflight(Request $request, $id)
+      {
+        $traveller=Traveler::find($id);
+        $flight=Flight::find($request->flight);
+        $ticket=Ticket::create(
+          [
+            'flight'=>$request->flight,
+            'ticket_status'=>1,
+            'qr'=>rand(1445645656,844564565),
+            'traveller'=>$id,
+            'gate'=>rand(0,1),
+            'user_id'=>$traveller->user_id
+          ]);
+        return redirect('/adminpanel/travellers')->with('success','traveller had been added successfully');
+      }
     /**
      * Show the form for creating a new resource.
      *
@@ -82,9 +69,6 @@ return redirect('/adminpanel/travellers')->with('success','traveller had been ad
      */
     public function store(Request $request)
     {
-
-
-
 
    }
 

@@ -20,12 +20,9 @@ class CountryController extends Controller
      */
    public function index()
     {
-
         if(Auth::user()->admin==1){
             $countries=Country::all();
-
             return view('admin.countries.countries',['countries'=>$countries]);
-
         }
        return view('auth.login');
     }
@@ -38,16 +35,11 @@ class CountryController extends Controller
      */
     public function create()
     {
-
-
       if(Auth::user()->admin){
-          $countries=Country::all();
-
-          return view('admin.countries.countries',['countries'=>$countries]);
-
+         $countries=Country::all();
+         return view('admin.countries.countries',['countries'=>$countries]);
       }
      return view('auth.login');
-
     }
 
     /**
@@ -58,24 +50,17 @@ class CountryController extends Controller
      */
     public function store(Request $request ,Country $country)
     {
-          $add= $request->input('country_add');
-
-       $countryAdd=Country::find($add);
-
-   $countryAdd->fill(['country_status'=>1])->save();
-
-return redirect()->back()->with('success', 'you hav  just added a country ');
-
+    $add= $request->input('country_add');
+    $countryAdd=Country::find($add);
+    $countryAdd->fill(['country_status'=>1])->save();
+    return redirect()->back()->with('success', 'you hav  just added a country ');
     }
-public function activate($id)
-{
-  $countryAdd=Country::find($id);
-
-$countryAdd->fill(['country_status'=>1])->save();
-
-return redirect()->back()->with('success', 'you hav  just added a country ');
-
-}
+    public function activate($id)
+    {
+      $countryAdd=Country::find($id);
+      $countryAdd->fill(['country_status'=>1])->save();
+      return redirect()->back()->with('success', 'you hav  just added a country ');
+    }
 
 
 
@@ -89,21 +74,14 @@ return redirect()->back()->with('success', 'you hav  just added a country ');
      */
     public function show($id, Country $country,City $city)
     {
-$countries=$country->all();
-$singleCountry=$country->find($id);
-$nameOfSingleCountry=showCountries($id);
-$allCities=$city->all();
-$citiesOn=$city->where('city_status',1)->get();
-$citiesOff=$city->where('city_status',0)->get();
-$cityShower=cities_airports();
-
-
-
-
+      $countries=$country->all();
+      $singleCountry=$country->find($id);
+      $nameOfSingleCountry=showCountries($id);
+      $allCities=$city->all();
+      $citiesOn=$city->where('city_status',1)->get();
+      $citiesOff=$city->where('city_status',0)->get();
+      $cityShower=cities_airports();
 // search by cities number
-
-
-
 // for ($i=1; $i<=3884;$i++  ) {
 //   if($cityShower [$i] ['country']==showCountries($singleCountry->id)) {
 //
@@ -146,17 +124,8 @@ return view('admin.countries.show',compact('singleCountry','allCities','citiesOn
      */
     public function drop( $id ,Country $country )
     {
-
-  $countrydrop=$country->find($id);
-
-$countrydrop->fill(['country_status'=>0])->save();
-
- return  redirect()->back()->with('success', 'You have Dropped (de-activated)  Country ');
-
-
-
-
-
-
+      $countrydrop=$country->find($id);
+      $countrydrop->fill(['country_status'=>0])->save();
+      return  redirect()->back()->with('success', 'You have Dropped (de-activated)  Country ');
     }
 }

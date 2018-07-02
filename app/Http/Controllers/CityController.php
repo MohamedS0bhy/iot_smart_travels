@@ -21,17 +21,13 @@ class CityController extends Controller
      */
     public function index(City $city)
     {
-      if(Auth::user()->admin==1){
-      $cityShower=cities_airports();
-          $Acities=$city->where('city_status',1)->get();
-
-          $countries=Country::all();
-          return view('admin.cities.cities',['Acities'=>$Acities,'cityShower'=>$cityShower,'countries'=>$countries]);
-
-      }
+    if(Auth::user()->admin==1){
+    $cityShower=cities_airports();
+    $Acities=$city->where('city_status',1)->get();
+    $countries=Country::all();
+    return view('admin.cities.cities',['Acities'=>$Acities,'cityShower'=>$cityShower,'countries'=>$countries]);
+    }
      return view('auth.login');
-
-
     }
 
     /**
@@ -42,15 +38,11 @@ class CityController extends Controller
     public function create( )
     {
       if(Auth::user()->admin==1){
-          $cities_array=cities_airports();
-
-         $Acities=City::where('city_status',1)->get();
-
-          return view('admin.cities.cities',['Acities'=>$Acities]);
-
+        $cities_array=cities_airports();
+        $Acities=City::where('city_status',1)->get();
+        return view('admin.cities.cities',['Acities'=>$Acities]);
       }
-     return view('auth.login');
-
+      return view('auth.login');
     }
 
     /**
@@ -61,30 +53,19 @@ class CityController extends Controller
      */
      public function store(Request $request ,City $city)
      {
-
-$add= $request->input('city_add');
-
-
-
-         $cityAdd=City::find($add);
-
-      $cityAdd->fill(['city_status'=>1])->save();
-
-
-   return redirect()->back()->with('success', 'you hav  just activated  City ');
+        $add= $request->input('city_add');
+        $cityAdd=City::find($add);
+        $cityAdd->fill(['city_status'=>1])->save();
+        return redirect()->back()->with('success', 'you hav  just activated  City ');
 
      }
 public function activate($id)
-{
+    {
+       $cityAdd=City::find($id);
+       $cityAdd->fill(['city_status'=>1])->save();
+       return redirect()->back()->with('success', 'you hav  just activated  City ');
 
-           $cityAdd=City::find($id);
-
-        $cityAdd->fill(['city_status'=>1])->save();
-
-
-     return redirect()->back()->with('success', 'you hav  just activated  City ');
-
-}
+    }
 
     /**
      * Display the specified resource.
@@ -95,30 +76,14 @@ public function activate($id)
     public function show($id, City $city)
     {
       $singleCity=$city->find($id);
-
-$cityShower=cities_airports();
-return view('admin.cities.show',['singleCity'=>$singleCity,'cityShower'=>$cityShower]);
+      $cityShower=cities_airports();
+      return view('admin.cities.show',['singleCity'=>$singleCity,'cityShower'=>$cityShower]);
     }
-
-
-
-
-
-
     public function drop( $id ,City $city )
     {
-
-    $citydrop=$city->find($id);
-
-    $citydrop->fill(['city_status'=>0])->save();
-
-    return  redirect()->back()->with('success', 'You have Dropped (de-activated)  Country ');
-
-
-
-
-
-
+      $citydrop=$city->find($id);
+      $citydrop->fill(['city_status'=>0])->save();
+      return  redirect()->back()->with('success', 'You have Dropped (de-activated)  Country ');
     }
 
 
@@ -153,8 +118,6 @@ return view('admin.cities.show',['singleCity'=>$singleCity,'cityShower'=>$citySh
      */
     public function delete($id)
     {
-
-
-
+ //
     }
 }
